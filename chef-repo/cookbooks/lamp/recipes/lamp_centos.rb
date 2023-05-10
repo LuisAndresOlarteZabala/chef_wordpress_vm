@@ -1,6 +1,5 @@
-yum_update 'Update the yum cache daily' do
-  frequency 86400
-  action :periodic
+yum_package 'httpd' do
+  action :upgrade
 end
 
 #-------------------Intalar httpd---------------------

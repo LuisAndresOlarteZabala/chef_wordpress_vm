@@ -3,6 +3,7 @@ apt_update 'Update the apt cache daily' do
     action :periodic
   end
   
+  
   package 'apache2'
   
   service 'apache2' do
