@@ -25,6 +25,7 @@ link '/etc/apache2/sites-enabled/vagrant.conf' do
   notifies :restart, resources(:service => "apache2")
 end
 
+
 #--------------------My SQL----------------------------
 
 # Crear base de datos para WordPress
