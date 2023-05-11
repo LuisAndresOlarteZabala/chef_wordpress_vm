@@ -3,12 +3,15 @@
 # Recipe:: default
 #
 # Copyright:: 2023, The Authors, All Rights Reserved.
-#include_recipe '::apache'
-#include_recipe '::mysql'
-#include_recipe '::php'
-#include_recipe '::facts'
 
   begin
-    include_recipe "lamp::lamp_#{node['lamp']['family']}" rescue 
-    Chef::Exceptions::RecipeNotFound
+    case node['platform']
+      when 'ubuntu'
+        include_recipe "lamp::lamp_ubuntu"
+      when 'centos'
+        include_recipe "lamp::lamp_centos"
+      else
+        Chef::Log.warn("Platform not supported: #{node['platform']}")
+    end
   end
+  

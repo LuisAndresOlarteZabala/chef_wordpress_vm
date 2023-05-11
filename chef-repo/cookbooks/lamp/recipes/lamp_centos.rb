@@ -1,9 +1,13 @@
-yum_package 'httpd' do
-  action :upgrade
+#-------------------Intalar httpd---------------------
+execute 'actualizar dnf' do
+  command "sudo dnf update -y"
+  action :run
 end
 
-#-------------------Intalar httpd---------------------
-package 'httpd'
+execute 'dnf instalar httpd' do
+  command "sudo dnf install httpd -y"
+  action :run
+end
 
 service 'httpd' do
   supports :status => true
@@ -22,13 +26,12 @@ end
 #--------------------MariaDB----------------------------
 
 # Instala el repositorio de MariaDB
-yum_repository 'mariadb' do
-  description "MariaDB Repository"
-  baseurl "http://yum.mariadb.org/10.4/centos7-amd64"
-  gpgkey 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
-  action :create
+package 'mariadb-server' do
+  action :install
 end
-
+package 'mariadb-client' do
+  action :install
+end
 
 # Crear base de datos para WordPress
 execute 'create_wordpress_database' do
