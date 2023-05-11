@@ -16,3 +16,9 @@ suites:
   attributes:
         lamp:
           family: "ubuntu"
+- name: lamp_centos 
+  run_list:
+  - recipe[lamp::lamp_centos] 
+  attributes:
+        lamp:
+          family: "centos"
