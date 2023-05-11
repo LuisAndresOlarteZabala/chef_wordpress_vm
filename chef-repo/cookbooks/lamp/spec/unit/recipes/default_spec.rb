@@ -21,15 +21,15 @@ describe 'lamp::default' do
     end
   end
 end
-#describe 'lamp::centos' do
-#  platform 'centos'
-#
-#  context 'with default attributes' do
-#
-#    override_attributes['lamp']['family'] = 'centos' 
-#
-#    it "should include the lamp::lamp_centos recipe when family=centos'" do 
-#      expect(chef_run).to include_recipe('lamp::lamp_centos') 
-#    end
-#  end
-#end
+describe 'lamp::default' do
+  platform 'centos'
+
+  context 'with modified attributes' do
+
+    override_attributes['lamp']['family'] = 'centos' 
+
+    it "should include the lamp::lamp_centos recipe when family=centos'" do 
+      expect(chef_run).to include_recipe('lamp::lamp_centos') 
+    end
+  end
+end

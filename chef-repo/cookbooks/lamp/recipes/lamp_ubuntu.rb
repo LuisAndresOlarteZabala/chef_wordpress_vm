@@ -35,16 +35,23 @@ execute 'create_wordpress_database' do
 end
 
 # Crear usuario y otorgar permisos para la base de datos de WordPress
-execute 'create_wordpress_user' do
-  command "mysql -u root -e \"CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'L123456'; GRANT ALL ON wordpress_db.* TO 'wp_user'@'localhost' IDENTIFIED BY 'L123456'; FLUSH PRIVILEGES;\""
-  action :nothing
+cache_path = Chef::Config['file_cache_path']
+bash "create_wordpress_user" do
+  cwd cache_path 
+  code <<-EOH
+  mysql -u root -e "CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'L123456';
+  GRANT ALL ON wordpress_db.* TO 'wp_user'@'localhost';
+  FLUSH PRIVILEGES;"
+  EOH
+  action :nothing 
 end
+
 
 # Instalar MySQL
 package 'mysql-server' do
   action :install
   notifies :run, 'execute[create_wordpress_database]', :immediately
-  notifies :run, 'execute[create_wordpress_user]', :immediately
+  notifies :run, "bash[create_wordpress_user]", :immediately
 end
 
 package 'mysql-client' 
